@@ -2,26 +2,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 import random
 import string
-import json
 import os
 import re
 
 app = Flask(__name__)
 
-URLS_FILE = 'urls.json'
-
-def load_urls():
-    if os.path.exists(URLS_FILE):
-        with open(URLS_FILE, 'r') as file:
-            return json.load(file)
-    else:
-        return {}
-
-def save_urls(urls):
-    with open(URLS_FILE, 'w') as file:
-        json.dump(urls, file)
-
-url_database = load_urls()
+url_database = {}
 
 def generate_short_url():
     characters = string.ascii_letters + string.digits
@@ -50,7 +36,6 @@ def shorten_url():
 
     short_url = generate_short_url()
     url_database[short_url] = original_url
-    save_urls(url_database)
 
     complete_short_url = url_for('redirect_to_original', short_url=short_url, _external=True)
     return render_template('index.html', short_url=complete_short_url)
