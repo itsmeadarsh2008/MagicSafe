@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # Start the Flask server
-CMD ["flask","run"]
+CMD ["python",'app.py']
