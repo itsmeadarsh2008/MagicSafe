@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MagicSafe Shortener</title>
+    <title>{{ hostname }} Shortener</title>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -48,7 +48,7 @@
     <div class="flex-1 flex items-center justify-center">
       <div class="container flex flex-col md:flex-row">
         <div class="md:w-1/2 p-8 text-center">
-          <h1 class="text-5xl font-bold gradient-text p-6">MagicSafe</h1>
+          <h1 class="text-5xl font-bold gradient-text p-6">{{ hostname }}</h1>
           <p class="text-lg text-gray-400">
             Fast and Less-Characterized URL Shortener
           </p>
@@ -58,7 +58,7 @@
             <li>🔒 <b>Reliability</b> Uncomplicated shortening services</li>
             <li>🤖 <b>Ease of Use</b> User-friendly interface</li>
             <li>💸 <b>Free</b> No cost for URL shortening services</li>
-            <li>🌐 <b>Permanent Short Links</b> Stable and lasting</li>
+            <li>🌐 <b>Permanent Short Links</b> Stable and lasting until the server memory is exhausted (ran out of memory). Self-hosted.</li>
             <li>
               🔐 <b>Security</b> Prioritizing the security of shortened URLs
             </li>
@@ -97,6 +97,9 @@
               >
                 Copy to Clipboard
               </button>
+              {% endif %}
+              {% if error %}
+              <p class="text-red-500 text-center mt-4">{{ error }}</p>
               {% endif %}
             </div>
           </div>
