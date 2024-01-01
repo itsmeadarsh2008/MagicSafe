@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ hostname }} Shortener</title>
+    <title id="pageTitle"></title>
+<script>document.getElementById("pageTitle").innerText = window.location.pathname.split('/').pop() || "Default Title";</script>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -48,7 +49,7 @@
     <div class="flex-1 flex items-center justify-center">
       <div class="container flex flex-col md:flex-row">
         <div class="md:w-1/2 p-8 text-center">
-          <h1 class="text-5xl font-bold gradient-text p-6">{{ hostname }}</h1>
+          <h1 class="text-5xl font-bold gradient-text p-6">MagicSafe</h1>
           <p class="text-lg text-gray-400">
             Fast and Less-Characterized URL Shortener
           </p>
@@ -97,9 +98,6 @@
               >
                 Copy to Clipboard
               </button>
-              {% endif %}
-              {% if error %}
-              <p class="text-red-500 text-center mt-4">{{ error }}</p>
               {% endif %}
             </div>
           </div>
