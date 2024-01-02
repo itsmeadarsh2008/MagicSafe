@@ -1,136 +1,181 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="pageTitle"></title>
-<script>document.getElementById("pageTitle").innerText = window.location.pathname.split('/').pop() || "Default Title";</script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@nextui-org/react/dist/index.css"
-    />
-    <style>
-      :root {
-        --color-1: #f3e0ec;
-        --color-2: #ead5e6;
-        --color-3: #f2befc;
-        --color-4: #ca9ce1;
-        --color-5: #685f74;
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magic URL Shortener(s) - Tenjin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@nextui-org/react/dist/index.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+
+    :root {
+      --color-1: #f3e0ec;
+      --color-2: #ead5e6;
+      --color-3: #f2befc;
+      --color-4: #ca9ce1;
+      --color-5: #685f74;
+    }
+
+    body {
+      color: #1a202c;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    * {
+      font-family: 'Kanit', sans-serif;
+    }
+
+    .gradient-text {
+      background: linear-gradient(
+        45deg,
+        var(--color-1),
+        var(--color-2),
+        var(--color-3),
+        var(--color-4),
+        var(--color-5)
+      );
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .url-error {
+      border: 2px solid rgb(236, 127, 127) !important;
+      animation: headShake 0.5s;
+    }
+
+    #websiteTitle:hover {
+      animation: rubberBand 0.5s;
+    }
+
+    /* Added CSS for the bounceIn effect on hover */
+    #features li:hover {
+      animation: bounceIn 0.5s;
+    }
+
+    @keyframes bounceIn {
+      from,
+      20%,
+      40%,
+      60%,
+      80%,
+      to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
       }
 
-      /* Darken text color for better visibility */
-      body {
-        color: #1a202c;
+      0% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
       }
 
-      /* Gradient for product name */
-      .gradient-text {
-        background: linear-gradient(
-          45deg,
-          var(--color-1),
-          var(--color-2),
-          var(--color-3),
-          var(--color-4),
-          var(--color-5)
-        );
-        -webkit-background-clip: text;
-        color: transparent;
+      20% {
+        transform: scale3d(1.1, 1.1, 1.1);
       }
-    </style>
-  </head>
-  <body
-    class="bg-gradient-to-b from-color-1 via-color-2 to-color-5 min-h-screen flex flex-col"
-  >
-    <div class="flex-1 flex items-center justify-center">
-      <div class="container flex flex-col md:flex-row">
-        <div class="md:w-1/2 p-8 text-center">
-          <h1 class="text-5xl font-bold gradient-text p-6">MagicSafe</h1>
-          <p class="text-lg text-gray-400">
-            Fast and Less-Characterized URL Shortener
-          </p>
-          <p class="font-bold text-2xl p-6">Highlighted Features</p>
-          <ol class="list-none hover:list-disc text-gray-500 space-y-2">
-            <li>🚀 <b>Simplicity</b> Easy to use for everyone</li>
-            <li>🔒 <b>Reliability</b> Uncomplicated shortening services</li>
-            <li>🤖 <b>Ease of Use</b> User-friendly interface</li>
-            <li>💸 <b>Free</b> No cost for URL shortening services</li>
-            <li>🌐 <b>Permanent Short Links</b> Stable and lasting until the server memory is exhausted (ran out of memory). Self-hosted.</li>
-            <li>
-              🔐 <b>Security</b> Prioritizing the security of shortened URLs
-            </li>
-          </ol>
-        </div>
-        <div class="md:w-1/2 p-8">
-          <div class="card">
-            <div class="card-content">
-              <div class="mb-8 text-center">
-                <form action="{{ url_for('shorten_url') }}" method="post">
-                  <input
-                    type="text"
-                    id="originalLink"
-                    name="original_link"
-                    placeholder="Enter your link"
-                    class="w-full p-4 border rounded-lg"
-                  />
-                  <button
-                    type="submit"
-                    class="w-full bg-indigo-500 text-white p-2 mt-4 rounded-lg"
-                  >
-                    Shorten Link
-                  </button>
-                </form>
-              </div>
-              {% if short_url %}
-              <p class="text-center text-gray-500">
-                Shortened URL:
-                <a href="{{ short_url }}" target="_blank" id="short_url_link"
-                  >{{ short_url }}</a
-                >
-              </p>
-              <button
-                id="copyButton"
-                class="w-full bg-blue-500 text-white p-2 mt-2 rounded-lg"
-              >
-                Copy to Clipboard
-              </button>
-              {% endif %}
+
+      40% {
+        transform: scale3d(0.9, 0.9, 0.9);
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03);
+      }
+
+      80% {
+        transform: scale3d(0.97, 0.97, 0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+  <div class="flex-1 flex items-center justify-center">
+    <div class="container flex flex-col md:flex-row">
+      <div class="md:w-1/2 p-8 text-center">
+        <h1 class="text-5xl font-bold gradient-text p-6 animate__animated" id="websiteTitle"></h1>
+        <script>
+          document.getElementById("websiteTitle").innerText = window.location.href.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
+        </script>
+        <p class="text-lg text-gray-400">
+          Fast and Less-Characterized URL Shortener with <b>performance</b> like no other.
+        </p>
+        <ul class="text-left mt-4" id="features">
+          <li class="mb-2">🚀 <b>Simplicity</b>: Easy to use for everyone, no complex procedures!</li>
+          <li class="mb-2">🔒 <b>Reliability</b> Uncomplicated shortening services for a hassle-free experience.</li>
+          <li class="mb-2">🤖 <b>User-Friendly Interface</b> Navigate with ease, providing a smooth and pleasant user experience.</li>
+          <li class="mb-2">💸 <b>Free of Charge</b> Enjoy the benefits of URL shortening services without any cost.</li>
+          <li class="mb-2">🌐 <b>Permanent Short Links</b> Stable and lasting until the server memory is exhausted. Self-hosted for reliability.</li>
+          <li class="mb-2">🔐 <b>Security</b> Prioritizing the security of shortened URLs for a safe online experience.</li>
+        </ul>
+      </div>
+      <div class="md:w-1/2 p-8">
+        <div class="card">
+          <div class="card-content">
+            <div class="mb-8 text-center">
+              <form action="{{ url_for('shorten_url') }}" method="post">
+                <input type="text" id="originalLink" name="original_link" placeholder="Enter your link (must start with http:// or https://)"
+                  class="w-full p-4 border-2 text-xl rounded-lg focus:outline-none focus:border-emerald-400 animate__animated" />
+                <button type="submit" class="w-full bg-emerald-400 text-slate-100 p-2 mt-4 rounded-lg font-bold tracking-wider">
+                  Shorten Link
+                </button>
+              </form>
             </div>
+            {% if short_url %}
+            <p class="text-center text-gray-500">
+              Shortened URL:
+              <a href="{{ short_url }}" target="_blank" id="short_url_link">{{ short_url }}</a>
+            </p>
+            <button id="copyButton" class="w-full bg-blue-500 text-white p-2 mt-2 rounded-lg font-bold tracking-wider">
+              Copy to Clipboard
+            </button>
+            {% endif %}
           </div>
         </div>
       </div>
     </div>
-    <footer class="page-footer bg-white">
-      <div class="container text-center">
-        <p class="text-gray-800 p-4">&copy; All Rights Reserved. Tenjin</p>
-      </div>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Initialize Tailwind components here if needed
+  </div>
+  <footer class="page-footer bg-white text-gray-500 w-full">
+    <div class="container text-center">
+      <p class="p-4">&copy; All Rights Reserved. Tenjin</p>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var urlInput = document.getElementById("originalLink");
 
-        // Copy to clipboard functionality
-        document
-          .getElementById("copyButton")
-          .addEventListener("click", function () {
-            var shortenedUrl =
-              document.getElementById("short_url_link").innerText;
-            var tempElement = document.createElement("textarea");
-            tempElement.value = shortenedUrl;
-            document.body.appendChild(tempElement);
+      urlInput.addEventListener("input", function () {
+        var urlValue = urlInput.value.trim();
+        var urlRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:[0-9]+)?(\/.*)?$/i;
 
-            tempElement.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempElement);
-
-            alert("Shortened URL copied to clipboard!");
-          });
+        if (!urlRegex.test(urlValue)) {
+          urlInput.classList.add("url-error");
+        } else {
+          urlInput.classList.remove("url-error");
+        }
       });
-    </script>
-  </body>
+
+      document.getElementById("copyButton").addEventListener("click", function () {
+        var shortenedUrl = document.getElementById("short_url_link").innerText;
+        var tempElement = document.createElement("textarea");
+        tempElement.value = shortenedUrl;
+        document.body.appendChild(tempElement);
+
+        tempElement.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempElement);
+
+        alert("Shortened URL copied to clipboard!");
+      });
+    });
+  </script>
+</body>
+
 </html>
